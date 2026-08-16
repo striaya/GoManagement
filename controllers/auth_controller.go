@@ -139,3 +139,19 @@ func Login(c *gin.Context) {
 		},
 	})
 }
+
+func Profile(c *gin.Context) {
+	claims, exists := c.Get("claims")
+
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "User tidak terautentikasi",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Profile berhasil diakses",
+		"claims": claims,
+	})
+}
