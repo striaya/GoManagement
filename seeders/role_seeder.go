@@ -1,20 +1,22 @@
 package seeders
 
 import (
-	"gomanagement/database"
+	"gomanagement/models"
+
 	"gorm.io/gorm"
 )
 
 func SeedRoles(db *gorm.DB) error {
 	roles := []models.Role{
 		{Name: "Admin"},
-		{Name: "Project Manager Go"},
+		{Name: "Project Manager"},
 		{Name: "Member"},
 		{Name: "Guest"},
 	}
 
 	for _, role := range roles {
 		var existingRole models.Role
+
 		result := db.Where("name = ?", role.Name).First(&existingRole)
 
 		if result.Error == gorm.ErrRecordNotFound {
@@ -23,5 +25,6 @@ func SeedRoles(db *gorm.DB) error {
 			}
 		}
 	}
+
 	return nil
 }
