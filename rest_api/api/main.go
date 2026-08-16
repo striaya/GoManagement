@@ -7,9 +7,14 @@ import (
 	"gomanagement/models"
 	"gomanagement/seeders"
 	"gomanagement/controllers"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		panic("Gagal membaca file .env")
+	}
+
 	database.Connect()
 	if err := seeders.SeedRoles(database.DB); err != nil {
 		panic(err)
@@ -20,6 +25,7 @@ func main() {
 	)
 	router := gin.Default()
 	router.POST("/api/register", controllers.Register)
+	router.POST("/api/login", controllers.Login)
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
