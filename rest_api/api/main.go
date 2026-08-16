@@ -6,6 +6,7 @@ import (
 	"gomanagement/database"
 	"gomanagement/models"
 	"gomanagement/seeders"
+	"gomanagement/controllers"
 )
 
 func main() {
@@ -18,6 +19,7 @@ func main() {
 		&models.User{},
 	)
 	router := gin.Default()
+	router.POST("/api/register", controllers.Register)
 
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
