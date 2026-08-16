@@ -5,10 +5,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"gomanagement/database"
 	"gomanagement/models"
+	"gomanagement/seeders"
 )
 
 func main() {
 	database.Connect()
+	if err := seeders.SeedRoles(database.DB); err != nil {
+		panic(err)
+	}
 	database.DB.AutoMigrate(
 		&models.Role{},
 		&models.User{},
