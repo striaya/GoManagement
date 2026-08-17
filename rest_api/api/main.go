@@ -23,6 +23,8 @@ func main() {
 	database.DB.AutoMigrate(
 		&models.Role{},
 		&models.User{},
+		&models.Workspace{},
+		&models.WorkspaceMember{},
 	)
 	router := gin.Default()
 	router.POST("/api/register", controllers.Register)

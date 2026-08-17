@@ -11,7 +11,7 @@ type Workspace struct {
 	Description string
 	OwnerID uint `gorm:"not null"`
 	Owner User `gorm:"foreignKey:OwnerID"`
-	CreatedAt time.time
-	UPdatedAt time.time
+	CreatedAt time.Time
+	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
