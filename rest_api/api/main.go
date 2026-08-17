@@ -29,7 +29,11 @@ func main() {
 	router := gin.Default()
 	router.POST("/api/register", controllers.Register)
 	router.POST("/api/login", controllers.Login)
-
+	router.POST(
+		"api/workspaces",
+		middleware.Auth(),
+		controllers.CreateWorkspace,
+	)
 	router.GET(
 		"/api/profile",
 		middleware.Auth(),
