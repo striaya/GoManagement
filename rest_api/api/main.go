@@ -25,6 +25,7 @@ func main() {
 		&models.User{},
 		&models.Workspace{},
 		&models.WorkspaceMember{},
+		&models.Project{},
 	)
 	router := gin.Default()
 	router.POST("/api/register", controllers.Register)
@@ -33,6 +34,11 @@ func main() {
 		"api/workspaces",
 		middleware.Auth(),
 		controllers.CreateWorkspace,
+	)
+	router.POST(
+		"/api/projects",
+		middleware.Auth(),
+		controllers.CreateProject,
 	)
 	router.GET(
 		"/api/profile",
