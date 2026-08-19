@@ -26,6 +26,21 @@ func main() {
 		&models.Workspace{},
 		&models.WorkspaceMember{},
 		&models.Project{},
+		&models.ProjectMember{},
+		&models.Status{},
+		&models.Priority{},
+		&models.Task{},
+		&models.TaskAssignee{},
+		&models.Comment{},
+		&models.Attachment{},
+		&models.Label{},
+		&models.TaskLabel{},
+		&models.Checklist{},
+		&models.ChecklistItem{},
+		&models.Notification{},
+		&models.Activity{},
+		&models.CalendarEvent{},
+		&models.TimeEntry{},
 	)
 	router := gin.Default()
 	router.POST("/api/register", controllers.Register)
