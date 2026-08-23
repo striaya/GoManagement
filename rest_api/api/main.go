@@ -17,9 +17,7 @@ func main() {
 	}
 
 	database.Connect()
-	if err := seeders.SeedRoles(database.DB); err != nil {
-		panic(err)
-	}
+	
 	database.DB.AutoMigrate(
 		&models.Role{},
 		&models.User{},
@@ -42,6 +40,8 @@ func main() {
 		&models.CalendarEvent{},
 		&models.TimeEntry{},
 	)
+	seeders.SeedRoles()
+	seeders.SeedDatabase()
 	router := gin.Default()
 	router.POST("/api/register", controllers.Register)
 	router.POST("/api/login", controllers.Login)
