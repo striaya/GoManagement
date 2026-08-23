@@ -43,18 +43,27 @@ func main() {
 	seeders.SeedRoles()
 	seeders.SeedDatabase()
 	router := gin.Default()
+	//Auth
 	router.POST("/api/register", controllers.Register)
 	router.POST("/api/login", controllers.Login)
+	//Workspace
 	router.POST(
 		"api/workspaces",
 		middleware.Auth(),
 		controllers.CreateWorkspace,
 	)
+	router.GET(
+		"api/workspaces",
+		middleware.Auth(),
+		controllers.GetWorkspaces,
+	)
+	//Project
 	router.POST(
 		"/api/projects",
 		middleware.Auth(),
 		controllers.CreateProject,
 	)
+	//Profile
 	router.GET(
 		"/api/profile",
 		middleware.Auth(),

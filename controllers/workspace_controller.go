@@ -89,3 +89,50 @@ func CreateWorkspace(c *gin.Context) {
 		},
 	})
 }
+
+func GetWorkspaces(c *gin.Context) {
+	claims, exists := c.Get("claims")
+
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H {
+			"message": "User tidak terautentikasi",
+		})
+		return
+	}
+
+
+	jwtClaims, ok := claims.(jwt.MapClaims)
+
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "Claims tidak valid",
+		})
+		return
+	}
+
+	userIDFloat, ok := jwtClaims["user_id"].(float64)
+	if !ok {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "User ID tidak valid",
+		})
+		return
+	}
+
+	userID := uint(userIDFloat)
+
+	var workspaces []models.Workspace
+	if err := database.DB.
+	Where("owner_id = ?", userID).
+	Find(&workspaces).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Gagal mengambil workspace",
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Workspace berhasil diambil",
+		"workspace": workspaces,
+	})
+}
