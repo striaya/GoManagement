@@ -136,3 +136,21 @@ func GetWorkspaces(c *gin.Context) {
 		"workspace": workspaces,
 	})
 }
+
+func GetWorkspace(c *gin.Context) {
+	id := c.Param("id")
+
+	var workspace models.Workspace
+	if err := database.DB.First(&workspace, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"message": "Workspace tidak ditemukan",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Workspace berhasil ditemukan",
+		"workspace": workspace,
+	})
+	return
+}
